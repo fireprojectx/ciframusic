@@ -2,7 +2,6 @@ import os
 import json
 from openai import OpenAI, APIError, APIConnectionError, RateLimitError
 
-# Inicializa o cliente com a API key
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def formatar_com_gpt(texto: str) -> dict:
@@ -11,10 +10,10 @@ def formatar_com_gpt(texto: str) -> dict:
             model="gpt-4o-mini",
             instructions=(
                 "Você é um assistente que transforma PDFs de músicas gospel em JSON estruturado "
-                "com as chaves: 'titulo', 'autor' e 'cifra'."
+                "com as chaves: 'titulo', 'autor' e 'cifra'. "
+                "Retorne apenas o JSON puro, sem explicações ou formatação adicional."
             ),
-            input=texto,
-            response_format="json"  # Garante que venha JSON puro
+            input=texto
         )
 
         conteudo = response.output_text.strip()
