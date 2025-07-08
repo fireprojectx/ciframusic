@@ -2,6 +2,6 @@ fastapi
 uvicorn[standard]
 python-multipart
 jinja2
-openai==0.28
+openai
 python-dotenv
 PyMuPDF
