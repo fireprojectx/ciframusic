@@ -1,4 +1,4 @@
-from openai import OpenAI
+from openai import OpenAI, APIError, APIConnectionError, RateLimitError
 import os
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -14,6 +14,13 @@ def formatar_com_gpt(texto: str) -> dict:
         conteudo = response.output_text.strip()
         return eval(conteudo)
 
+    except APIError as e:
+        print(f"Erro da API OpenAI: {e}")
+    except APIConnectionError as e:
+        print(f"Erro de conexão com a OpenAI: {e}")
+    except RateLimitError as e:
+        print(f"Rate limit excedido: {e}")
     except Exception as e:
-        print("Erro GPT:", e)
-        return {"titulo": "Erro", "autor": "Erro", "cifra": "Erro"}
+        print(f"Erro inesperado: {e}")
+
+    return {"titulo": "Erro", "autor": "Erro", "cifra": "Erro"}
