@@ -6,7 +6,7 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 def formatar_com_gpt(texto: str) -> dict:
     try:
         response = client.responses.create(
-            model="gpt-4.1",
+            model="gpt-4o-mini",
             instructions="Você é um assistente que transforma PDFs de músicas gospel em JSON estruturado com as chaves: 'titulo', 'autor' e 'cifra'.",
             input=texto
         )
