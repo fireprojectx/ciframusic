@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ titulo }}</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>{{ titulo }}</h1>
+  <h3>Autor: {{ autor }}</h3>
+  <div id="letra">
+    {% for linha in cifra.split('\n') %}
+      <p>{{ linha }}</p>
+    {% endfor %}
+  </div>
+
+  <script>
+    const velocidade = {{ velocidade }};
+    const paragrafos = document.querySelectorAll('#letra p');
+    let index = 0;
+
+    function scrollLinha() {
+      if (index < paragrafos.length) {
+        paragrafos[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        index++;
+        setTimeout(scrollLinha, velocidade * 1000);
+      }
+    }
+
+    window.onload = scrollLinha;
+  </script>
+</body>
+</html>
