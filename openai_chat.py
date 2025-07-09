@@ -12,8 +12,8 @@ def formatar_com_gpt(texto: str) -> dict:
                 {
                     "role": "system",
                     "content": (
-                        "Você é um assistente que transforma letras de músicas gospel em JSON "
-                        "com as chaves: 'titulo', 'autor' e 'cifra'. "
+                        "Você é um assistente que transforma letras de músicas gospel em JSON. Sem tablatura ou como os acordes são construídos."
+                        "com as chaves: 'titulo', 'autor' e 'cifra (apenas letra e a cifra)'. "
                         "A resposta **DEVE** estar formatada como um JSON Python válido. Exemplo:\n"
                         "{\n"
                         "  \"titulo\": \"Porque Ele Vive\",\n"
