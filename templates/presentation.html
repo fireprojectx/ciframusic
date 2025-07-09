@@ -81,28 +81,34 @@
     {% endfor %}
   </div>
 
-  <script>
-    const paragrafos = document.querySelectorAll('.linha');
-    let index = 0;
-    let rolagemAtiva = false;
+    <script>
+    let scrollInterval;
+    let isScrolling = false;
 
     function iniciarRolagem() {
-      if (rolagemAtiva) return;
-      index = 0;
-      rolagemAtiva = true;
-      scrollLinha();
-    }
+      if (isScrolling) return;
 
-    function scrollLinha() {
-      if (index < paragrafos.length) {
-        paragrafos[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
-        index++;
-        const velocidade = parseFloat(document.getElementById("velocidadeInput").value) || 3;
-        setTimeout(scrollLinha, velocidade * 1000);
-      } else {
-        rolagemAtiva = false;
+      const velocidade = parseFloat(document.getElementById("velocidadeInput").value) || 3;
+     const pixelsPorSegundo = 30 / velocidade; // quanto menor a velocidade, mais rápido
+
+      isScrolling = true;
+
+      function rolar() {
+       window.scrollBy(0, pixelsPorSegundo);
+        scrollInterval = requestAnimationFrame(rolar);
       }
-    }
+
+      rolar();
+   }
+
+  // Opcional: tecla ESC para parar
+    document.addEventListener("keydown", (e) => {
+     if (e.key === "Escape") {
+       cancelAnimationFrame(scrollInterval);
+       isScrolling = false;
+     }
+   });
   </script>
+
 </body>
 </html>
