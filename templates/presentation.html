@@ -11,10 +11,9 @@
       padding: 30px;
     }
 
-    .bloco {
+    .linha {
       margin-bottom: 20px;
       white-space: pre;
-      text-align: left;
     }
 
     .cifra {
@@ -31,32 +30,10 @@
   <h3>Autor: {{ autor }}</h3>
 
   <div id="letra">
-    {% for linha in (cifra or '').split('\n') %}
-      {% set cifra_linha = "" %}
-      {% set letra_linha = "" %}
-      {% set i = 0 %}
-      {% while i < linha|length %}
-        {% if linha[i] == '[' %}
-          {% set end = linha.find(']', i) %}
-          {% if end != -1 %}
-            {% set acorde = linha[i:end+1] %}
-            {% set cifra_linha = cifra_linha + acorde %}
-            {% set letra_linha = letra_linha + ' ' * (end + 1 - i) %}
-            {% set i = end + 1 %}
-          {% else %}
-            {% set cifra_linha = cifra_linha + linha[i] %}
-            {% set letra_linha = letra_linha + ' ' %}
-            {% set i = i + 1 %}
-          {% endif %}
-        {% else %}
-          {% set cifra_linha = cifra_linha + ' ' %}
-          {% set letra_linha = letra_linha + linha[i] %}
-          {% set i = i + 1 %}
-        {% endif %}
-      {% endwhile %}
-      <div class="bloco">
-        <div class="cifra">{{ cifra_linha }}</div>
-        <div>{{ letra_linha }}</div>
+    {% for l in linhas %}
+      <div class="linha">
+        <div class="cifra">{{ l.cifra }}</div>
+        <div>{{ l.letra }}</div>
       </div>
     {% endfor %}
   </div>
