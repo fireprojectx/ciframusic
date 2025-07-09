@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, Form, Request
+from fastapi import FastAPI, UploadFile, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -15,7 +15,7 @@ def form(request: Request):
     return templates.TemplateResponse("form.html", {"request": request})
 
 @app.post("/upload", response_class=HTMLResponse)
-async def upload(request: Request, file: UploadFile, velocidade: float = Form(...)):
+async def upload(request: Request, file: UploadFile):
     conteudo_pdf = await file.read()
     texto_extraido = extrair_texto_pdf(conteudo_pdf)
     resposta = formatar_com_gpt(texto_extraido)
@@ -24,8 +24,8 @@ async def upload(request: Request, file: UploadFile, velocidade: float = Form(..
         "request": request,
         "titulo": resposta.get("titulo", "Sem título"),
         "autor": resposta.get("autor", "Desconhecido"),
-        "cifra": resposta.get("cifra", ""),
-        "velocidade": velocidade
+        "cifra": resposta.get("cifra", "")
+        # Não precisa passar "velocidade" aqui, pois será controlada na tela
     })
 
 def extrair_texto_pdf(pdf_bytes):
