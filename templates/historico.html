@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Histórico de Cifras</title>
+  <style>
+    body {
+      background-color: #111;
+      color: white;
+      font-family: sans-serif;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #222;
+      border-radius: 6px;
+    }
+
+    a {
+      color: orange;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>Histórico de Cifras</h1>
+  <ul>
+    {% for id, titulo, autor in cifras %}
+      <li>
+        <a href="/cifra/{{ id }}">{{ titulo }}</a><br>
+        <small>Autor: {{ autor }}</small>
+      </li>
+    {% else %}
+      <li>Nenhuma cifra cadastrada.</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
