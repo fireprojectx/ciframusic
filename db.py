@@ -65,3 +65,21 @@ def buscar_cifra_por_titulo(titulo):
     except Exception as e:
         print("❌ Erro ao buscar cifra por título:", e)
     return None
+
+
+def buscar_cifra_por_id(id):
+    try:
+        conn = get_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT id, titulo, autor, cifra FROM cifras WHERE id = %s", (id,))
+        row = cur.fetchone()
+        cur.close()
+        conn.close()
+
+        if row:
+            return row  # retorna como tupla (id, titulo, autor, cifra)
+        return None
+    except Exception as e:
+        print("❌ Erro ao buscar cifra por ID:", e)
+        return None
+
