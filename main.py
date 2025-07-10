@@ -29,26 +29,30 @@ criar_tabela_se_nao_existir()
 def form(request: Request):
     return templates.TemplateResponse("form.html", {"request": request})
 
-
 @app.post("/upload", response_class=HTMLResponse)
 async def upload(request: Request, file: UploadFile):
     conteudo_pdf = await file.read()
     texto_extraido = extrair_texto_pdf(conteudo_pdf)
+
+    # Opcional: log para debug
+    print("🎵 Texto extraído do PDF:\n", texto_extraido)
+
     resposta = formatar_com_gpt(texto_extraido)
 
-    # Salvar no banco
-    salvar_cifra(
-        resposta.get("titulo", "Sem título"),
-        resposta.get("autor", "Desconhecido"),
-        resposta.get("cifra", "")
-    )
+    titulo = resposta.get("titulo", "Sem título")
+    autor = resposta.get("autor", "Desconhecido")
+    cifra = resposta.get("cifra", "")
 
-    linhas = separar_cifras_letra(resposta.get("cifra", ""))
+    # Salvar no banco de dados
+    salvar_cifra(titulo, autor, cifra)
+
+    # Processar cifra em linhas (cifra e letra)
+    linhas = separar_cifras_letra(cifra)
 
     return templates.TemplateResponse("presentation.html", {
         "request": request,
-        "titulo": resposta.get("titulo", "Sem título"),
-        "autor": resposta.get("autor", "Desconhecido"),
+        "titulo": titulo,
+        "autor": autor,
         "linhas": linhas
     })
 
