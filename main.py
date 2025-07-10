@@ -6,6 +6,9 @@ import fitz  # PyMuPDF
 from openai_chat import formatar_com_gpt
 from db import salvar_cifra  # ✅ Importa a função do banco
 
+from db import criar_tabela_se_nao_existir
+criar_tabela_se_nao_existir()
+
 
 from fastapi import Path
 
