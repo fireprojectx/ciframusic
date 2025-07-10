@@ -7,12 +7,11 @@ from openai_chat import formatar_com_gpt
 from db import salvar_cifra  # ✅ Importa a função do banco
 from db import listar_cifras
 
-from db import buscar_cifra_por_titulo
+
 
 from db import criar_tabela_se_nao_existir
 criar_tabela_se_nao_existir()
 
-templates = Jinja2Templates(directory="templates")
 
 from fastapi import Path
 
@@ -44,16 +43,18 @@ def ver_cifra(request: Request, id: int = Path(...)):
 
 
 @app.get("/cifra/titulo/{titulo}", response_class=HTMLResponse)
-def ver_cifra(titulo: str, request: Request):
-    resultado = buscar_cifra_por_titulo(titulo)
-    if resultado:
-        return templates.TemplateResponse("presentation.html", {
-            "request": request,
-            "titulo": resultado["titulo"],
-            "autor": resultado["autor"],
-            "cifra": resultado["cifra"]
-        })
-    return HTMLResponse(content="Cifra não encontrada", status_code=404)
+def exibir_cifra_por_titulo(request: Request, titulo: str = Path(...)):
+    cifra = buscar_cifra_por_titulo(titulo)
+
+    if cifra is None:
+        return HTMLResponse(content="Cifra não encontrada", status_code=404)
+
+    return templates.TemplateResponse("presentation.html", {
+        "request": request,
+        "titulo": cifra["titulo"],
+        "autor": cifra["autor"],
+        "cifra": cifra["cifra"]
+    })
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
