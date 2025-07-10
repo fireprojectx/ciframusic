@@ -99,14 +99,16 @@ def exibir_cifra_por_titulo(request: Request, titulo: str = Path(...)):
     if cifra is None:
         return HTMLResponse(content="Cifra não encontrada", status_code=404)
 
-    linhas = separar_cifras_letra(cifra["cifra"])  # ✅ Processa cifra em linhas
+    # ✅ Processar cifra em linhas para exibição
+    linhas = separar_cifras_letra(cifra["cifra"])
 
     return templates.TemplateResponse("presentation.html", {
         "request": request,
         "titulo": cifra["titulo"],
         "autor": cifra["autor"],
-        "linhas": linhas  # ✅ nome correto da variável
+        "linhas": linhas  # <- a chave que o template espera
     })
+
 
 
 # -----------------------------------------
