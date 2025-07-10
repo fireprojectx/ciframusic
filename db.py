@@ -46,3 +46,24 @@ def listar_cifras():
     except Exception as e:
         print("❌ Erro ao listar cifras:", e)
         return []
+    
+def buscar_cifra_por_titulo(titulo):
+    try:
+        conn = get_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT titulo, autor, cifra FROM cifras WHERE titulo = %s", (titulo,))
+        resultado = cur.fetchone()
+        cur.close()
+        conn.close()
+
+        if resultado:
+            return {
+                "titulo": resultado[0],
+                "autor": resultado[1],
+                "cifra": resultado[2]
+            }
+        return None
+    except Exception as e:
+        print("❌ Erro ao buscar cifra por título:", e)
+        return None
+
