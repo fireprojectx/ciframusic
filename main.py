@@ -81,7 +81,7 @@ def ver_cifra(request: Request, id: int = Path(...)):
         "request": request,
         "titulo": titulo,
         "autor": autor,
-        "linhas": linhas
+        "linhas": linhas  # ⚠️ ESSA É A VARIÁVEL USADA NO HTML
     })
 
 
