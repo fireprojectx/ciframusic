@@ -36,4 +36,13 @@ def salvar_cifra(titulo, autor, cifra):
                 conn.commit()
     except Exception as e:
         print("❌ Erro ao salvar cifra no banco:", e)
-        
+
+def listar_cifras():
+    try:
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute("SELECT id, titulo, autor FROM cifras ORDER BY id DESC")
+                return cur.fetchall()
+    except Exception as e:
+        print("❌ Erro ao listar cifras:", e)
+        return []
