@@ -63,9 +63,10 @@ async def upload(request: Request, file: UploadFile):
 @app.get("/historico", response_class=HTMLResponse)
 def historico(request: Request):
     cifras = listar_cifras()
+    cifras_ordenadas = sorted(cifras, key=lambda x: x[1].lower())
     return templates.TemplateResponse("historico.html", {
         "request": request,
-        "cifras": cifras
+        "cifras": cifras_ordenadas
     })
 
 
