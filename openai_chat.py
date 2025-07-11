@@ -12,7 +12,7 @@ def formatar_com_gpt(texto: str) -> dict:
                 {
                     "role": "system",
                     "content": (
-                        "Você é um assistente que transforma letras de músicas gospel em JSON. "
+                        "Você é um assistente que transforma letras de músicas gospel em JSON. Se não for uma música gospel, responda educadamente que só processa músicas do gênero gospel/cristão. "
                         "Não inclua tablaturas, nem explicações, nem formatação extra. "
                         "A resposta DEVE conter apenas um JSON puro com as chaves: 'titulo', 'autor' e 'cifra'.\n\n"
                         "Exemplo:\n"
